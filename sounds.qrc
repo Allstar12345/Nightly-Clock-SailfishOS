@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/sounds/tick.mp3</file>
+    </qresource>
+</RCC>

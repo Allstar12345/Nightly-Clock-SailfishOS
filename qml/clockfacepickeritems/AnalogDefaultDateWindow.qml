@@ -1,0 +1,145 @@
+import QtQuick 2.6
+import QtGraphicalEffects 1.0
+import Sailfish.Silica 1.0
+import "../"
+
+Item {
+    id: analogclock
+    opacity:powerSaving?0.6:1.0
+    MouseArea{
+        anchors.fill: parent;
+        onClicked: {
+            listView.currentIndex = index;
+            if(selected)selected = false;
+            else clearSelected();
+            selected = true
+        }
+    }
+    width: tutorialMode? main.compactMode? Screen.sizeCategory== Screen.Large? Screen.width/1.5:Screen.width/1.2 : Screen.sizeCategory== Screen.Large?Screen.width/1.5:Screen.width/1.6 :main.largeScreen? listView.cellWidth/1.2:main.compactMode? Screen.sizeCategory== Screen.Large? Screen.width/1.5:Screen.width/1.2 : Screen.sizeCategory== Screen.Large?Screen.width/1.5:Screen.width/1.6
+    height: width
+    anchors{
+        centerIn: parent
+    }
+    property bool timerRunning:false
+
+    function getHours() {
+        var date = new Date
+        return date.getHours()
+    }
+
+    function getMinutes(){
+        var date = new Date
+        return date.getMinutes()
+    }
+
+    function getSeconds(){
+        var date = new Date
+        return date.getSeconds()
+    }
+
+    property int hours: getHours()
+    property int minutes: getMinutes()
+    property int seconds: getSeconds()
+    property int milliseconds
+
+     Image {
+         id: face
+         source: "../images/clock_base.svg"
+         sourceSize.height:sourceSize.width
+         width: sourceSize.width
+         height: sourceSize.height
+         sourceSize.width: analogclock.width
+         anchors.centerIn: parent
+
+     }
+     ColorOverlay {
+               anchors.fill:face
+               source: face
+               color:colour
+           }
+
+     Rectangle{
+         Text{
+             id: dateText;
+             color:colour;
+             font.pointSize: Theme.fontSizeExtraSmall;
+             font.bold: true;
+             text:Qt.formatDate(new Date(), "d");
+             anchors.centerIn: parent
+         }
+
+         color:"transparent";
+         border.color: colour;
+         border.width: 2;
+         height: Theme.itemSizeExtraSmall/1.7;
+         width: Theme.itemSizeExtraSmall/1.5;
+         anchors{
+             verticalCenter:face.verticalCenter;
+             verticalCenterOffset: 0;
+             right: face.right;
+             rightMargin:tutorialMode?Theme.paddingLarge*4: largeScreen? Theme.paddingLarge*2: Theme.paddingLarge*4
+         }
+     }
+
+     Rectangle{
+     height:Theme.itemSizeExtraSmall/2.3
+     width:height;
+     radius: 30;
+     anchors.centerIn: parent;
+     color:colour
+     }
+
+
+
+HourHand{
+    parent: face
+    id: hourHand
+      anchors.centerIn: parent
+      transform: Rotation {
+          id: hourRotation
+          origin.x: hourHand.width/2;
+          origin.y: hourHand.height/2;
+          angle: (analogclock.hours * 30) + (analogclock.minutes * 0.5)
+          Behavior on angle {
+              SpringAnimation { spring: powerSaving?1:2; damping: 0.2; modulus: 360 }
+
+              //RotationAnimation{ direction: RotationAnimation.Clockwise }
+          }
+      }
+}
+
+MinuteHand{
+    id: minuteHand
+    anchors.centerIn: parent
+    parent: face
+    smooth: true
+    transform: Rotation {
+        id: minuteRotation
+        origin.x: minuteHand.width/2;
+        origin.y: minuteHand.height/2;
+        angle: analogclock.minutes * 6
+        Behavior on angle {
+            SpringAnimation { spring: powerSaving?1:2; damping: 0.2; modulus: 360 }
+        }
+    }
+}
+
+
+SecondHand{
+     id: secondHand
+     anchors.centerIn: parent
+     parent: face
+     smooth: true
+     transform: Rotation {
+         id: secondRotation
+         origin.x: secondHand.width/2;
+         origin.y: secondHand.height/2;
+         angle: analogclock.seconds * 6
+         Behavior on angle {
+             SpringAnimation { spring: powerSaving?1:2; damping: 0.2; modulus: 360 }
+         }
+     }
+}
+
+}
+

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-NightlyClockSailfish
+Exec=harbour-NightlyClockSailfish
+Name=Nightly Clock
+
+[X-Sailjail]
+#OrganizationName=AllstarSoftware
+#ApplicationName=harbour-NightlyClockSailfish
+#Permissions=Audio;Internet;UserDirs;Location;AppLaunch
+Sandboxing=Disabled
+
+#See BUG#6 15/11/2021 for above

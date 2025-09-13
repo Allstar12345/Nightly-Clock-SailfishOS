@@ -40,8 +40,9 @@ onApplicationActiveChanged: {
    BingWallpaper{
        id: bingWallpaper;
         onResultFinished: {
-            if(xResult["images"][0]["url"] === appsettings.getSystemSetting("imageofthedaylasturlll", "")){
-                wallpaperSource = "file://" + StandardPaths.data + "/photoftheday.jpg"
+            var file_path = StandardPaths.data + "/photoftheday.jpg";
+            if(qmlUtils.checkFileExists(file_path) && xResult["images"][0]["url"] === appsettings.getSystemSetting("imageofthedaylasturlll", "")){
+                wallpaperSource = "file://" + file_path;
             }
             else{
             console.log(xResult["images"][0]["url"])

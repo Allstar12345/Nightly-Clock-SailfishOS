@@ -1581,6 +1581,10 @@ Please update your device if possible or download a supported version of Nightly
         <source>Hours</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use Meecast events widget</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WhiteNoiseSettings</name>

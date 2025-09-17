@@ -322,6 +322,7 @@ property bool findingLocation
 property int weatherRefreshInterval
 property bool showWeather:true
 property bool showWeatherTemp
+property bool weatherMeeCast:false
 property bool standbyMode:false
 signal toggleDarkWallpaper
 property double lastScreenBrightness
@@ -508,6 +509,7 @@ else{return compactMode? Theme.fontSizeHuge*1.6: Theme.fontSizeHuge*2.5
         alarmVolume =  appsettings.getSystemSetting("alarmVolume", "")==="" ? 0.99 : appsettings.getSystemSetting("alarmVolume", "");
         showWeatherTemp = appsettings.getSystemSetting("weatherTemp", "")===""? true:false
         showWeather = appsettings.getSystemSetting("showWeather", "")===""? false:true
+        weatherMeeCast = appsettings.getSystemSetting("weatherMeeCast", "")===""? false:true
         weatherLocationEnabled = appsettings.getSystemSetting("weatherLocationGPS", "")===""? false:true
         weatherRefreshInterval = appsettings.getSystemSetting("weatherRefreshInterval", "3600000");
         if(wallpaperSource === "bing"){

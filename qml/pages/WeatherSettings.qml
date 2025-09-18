@@ -81,6 +81,24 @@ SilicaFlickable{
             }
         }
 
+        TextSwitch{
+            text:qsTr("Use Meecast events widget")
+            checked: weatherMeeCast
+            enabled: showWeather
+            onClicked: {
+                if(weatherMeeCast === true){
+                    weatherMeeCast = false;
+                    appsettings.saveSystemSetting("weatherMeeCast", "");
+                    weatherVisibleForce();
+                }
+                else{
+                    weatherMeeCast = true;
+                    appsettings.saveSystemSetting("weatherMeeCast", "true");
+                    weatherVisibleForce();
+                }
+            }
+        }
+
         SectionHeader{text: qsTr("Location")}
 
         IconTextSwitch{
@@ -102,7 +120,7 @@ SilicaFlickable{
         }
 }
         TextField{
-            enabled: showWeather
+            enabled: showWeather && !weatherMeeCast
             id: textField
             property string bob: appsettings.getSystemSetting("weatherlocation", "")
 
@@ -127,7 +145,7 @@ SilicaFlickable{
         }
 
         TextSwitch{
-            enabled: showWeather
+            enabled: showWeather && !weatherMeeCast
             text:qsTr("Show temperature")
             checked: showWeatherTemp
             onClicked: {
@@ -142,7 +160,7 @@ SilicaFlickable{
             }
         }
         TextSwitch{
-            enabled: showWeather
+            enabled: showWeather && !weatherMeeCast
             text:qsTr("Show location")
             checked: showWeatherLocation
             onClicked: {
@@ -158,7 +176,7 @@ SilicaFlickable{
         }
 
         ComboBox{
-            enabled: showWeather
+            enabled: showWeather && !weatherMeeCast
             label:qsTr("Temperature unit")
             id: tempSel
             Component.onCompleted: {
@@ -225,7 +243,7 @@ SilicaFlickable{
         }
 
         Slider{
-            enabled: showWeather
+            enabled: showWeather && !weatherMeeCast
             label:qsTr("Weather Refresh Time")
             minimumValue: 1800000
             maximumValue: 18000000

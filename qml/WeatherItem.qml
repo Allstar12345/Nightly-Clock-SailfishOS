@@ -1,11 +1,12 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 import Sailfish.Silica 1.0
+import Sailfish.Weather 1.0
 
 Item{
 id: root
-width: img.width + tempText.width*2.5
-height: img.height
+width: weatherMeeCast? weatherData.width : img.width + tempText.width*2.5
+height: weatherMeeCast? weatherData.height :img.height
 signal pressAndHold
 signal clicked
 visible: false
@@ -129,6 +130,7 @@ MouseArea{
 
 Image{
    opacity: powerSaving?0.6: 1;
+   visible: !weatherMeeCast
    id: img;
    sourceSize.width: Theme.itemSizeSmall - 10;
    sourceSize.height: Theme.itemSizeSmall - 10;
@@ -226,7 +228,7 @@ Image{
 }
 Text{
     id: tempText;
-    visible: showWeatherTemp;
+    visible: showWeatherTemp && !weatherMeeCast;
     font.bold: boldFont;
     font.pointSize:Theme.fontSizeSmall;
     color: colour;
@@ -238,4 +240,9 @@ Text{
         verticalCenter:  img.verticalCenter
     }
 }
+WeatherBanner{
+    id: weatherData
+    visible: weatherMeeCast
+    expanded: true
+   }
 }
